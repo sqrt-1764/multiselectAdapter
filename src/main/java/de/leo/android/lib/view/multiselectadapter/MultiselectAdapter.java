@@ -45,15 +45,12 @@ public abstract class MultiselectAdapter<BindingObjectFactory extends Multiselec
          * Action that is executed when the detail-view is short clicked unless the Recycler-View
          * is in MultiSelect-Mode.
          *
-         * @param context   Context is needed to create the intent to call the detail-action.
+         * @param context   Context is needed to create the intent to call the detail-activity.
          * @param item      Either the object that shall be handled by the detail-view or a key
          *                  into a database of the app identifying that object.
          */
         void editDetails(Context context, ItemType item);
 
-        /**
-         * @return  Unique key that identifies the underlying data-object or the object itself.
-         */
         Object getItem();
     }
 
@@ -64,8 +61,8 @@ public abstract class MultiselectAdapter<BindingObjectFactory extends Multiselec
      */
     public interface DataBindingFactory {
         /**
-         * Transfer the static inflate-Method of the underlying databinding-object into the runtime
-         * environment.
+         * Make the static inflate-Method of the underlying databinding-object accessible
+         * to the runtime environment.
          */
         ActionDataBinding inflate(LayoutInflater inflater, ViewGroup viewGroup, boolean attachToRoot);
     }
@@ -98,7 +95,7 @@ public abstract class MultiselectAdapter<BindingObjectFactory extends Multiselec
                 int adapterPosition = getAdapterPosition();
                 setActivated(selectAction.toggleSelection(adapterPosition));
 
-                if (selectAction.checkedItems.size() == 0) selectAction.setActivate(false);
+                if (selectAction.checkedItems.size() == 0) selectAction.startActionMode(false);
             } else {
                 binding.editDetails(v.getContext(), binding.getItem());
             }
@@ -107,7 +104,7 @@ public abstract class MultiselectAdapter<BindingObjectFactory extends Multiselec
         @Override
         public boolean onLongClick(View v) {
             if (selectAction != null) {
-                selectAction.setActivate(true);     // Activate MultiChoice-Mode
+                selectAction.startActionMode(true);     // Activate MultiChoice-Mode
                 onClick(v);
             }
             return true;
@@ -144,7 +141,7 @@ public abstract class MultiselectAdapter<BindingObjectFactory extends Multiselec
         /**
          * Activate or deactivate the action mode of the corresponding {@link MultiselectAdapter}.
          */
-        public void setActivate(boolean activate) {
+        public void startActionMode(boolean activate) {
             if (callback == null) {
                 isActive = false;
                 return;

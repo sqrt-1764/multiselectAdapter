@@ -71,7 +71,7 @@ public class MultiselectCursorAdapter<BindingObjectFactory extends MultiselectAd
 
     @Override
     public MultiselectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final ActionDataBinding binding = factoryObject.inflate(LayoutInflater.from(parent.getContext()), parent, true);
+        final ActionDataBinding binding = factoryObject.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new MultiselectCursorViewHolder((CursorActionDataBinding)binding, selectAction);
     }
 

@@ -75,7 +75,7 @@ setHasStableIds(false);
 
     @Override
     public MultiselectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final ActionDataBinding binding = factoryObject.inflate(LayoutInflater.from(parent.getContext()), parent, true);
+        final ActionDataBinding binding = factoryObject.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new MultiselectArrayViewHolder((ArrayActionBinding)binding, selectAction);
     }
 
